@@ -1,0 +1,13 @@
+{
+    "despesas":[],
+    "categoria":[
+        {
+            "id":1,
+            "name": "À vista"
+        },
+        {
+            "id":2,
+            "name": "Parcelado"
+        }
+    ]
+}

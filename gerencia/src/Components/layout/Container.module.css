@@ -1,0 +1,25 @@
+.container{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    position: relative;
+    flex-wrap: wrap;
+}
+.min_height{
+    min-height: 76.1vh;
+}
+.start{
+    justify-content: flex-start;
+}
+.column{
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+img{
+    
+    width: 100%;
+    
+}

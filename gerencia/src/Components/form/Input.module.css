@@ -1,0 +1,58 @@
+.form_controle{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+.form_controle label{
+    margin-bottom: .6em;
+    font-weight:bold;
+}
+.form_controle > input{
+    padding: .7em;
+    border-radius: 0;
+     
+}
+input{
+    width: 100%;
+}
+
+.form_controle input::placeholder{
+    color:#7b7b7b;
+}/*{ <div>
+                <label>Descrição:</label>
+                <input type="text" placeholder='exemplo: despesas de mercado' />
+            </div>*/
+.boxLogin{
+    margin: 0px;
+    padding: 0px 10px 0px 0px;
+    width: 40%;
+    
+}
+.boxLogin > label{
+    
+    margin: 0px;
+    color: white;
+    font-size: clamp( 0.8rem, 0.8vw + 0.1rem, 1rem);
+
+}
+.boxLogin > input{
+    height: 25px;
+     
+    border-radius: 4px;
+    border: none;
+}
+.recPassword > a{
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp( 0.5rem, 0.6vw + 0.1rem, 1rem);
+    padding-left: 2px;
+
+    
+}
+.recPassword > a:hover{
+    color: rgb(155, 243, 155);
+}
+.inputCadRecPasswordCliente > input{ 
+    border-radius: 5px;
+    border: none;
+}

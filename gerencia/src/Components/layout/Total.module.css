@@ -1,0 +1,13 @@
+.display_lateral{
+    background-color: rgb(240, 133, 133);
+    width: 25%;
+    border-radius: 7px;
+    text-align: center;
+    position: relative;
+    left: 70%;
+    top: 63px;
+    
+}
+.display_lateral > h1{
+    font-size: clamp( 1rem, 1.5vw + 0.1rem, 2rem);
+}

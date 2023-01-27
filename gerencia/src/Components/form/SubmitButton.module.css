@@ -1,0 +1,54 @@
+.boxButton{
+    
+    height: 65px; 
+    align-items: center;   
+    display: flex;
+    margin-bottom: 4px;
+
+}
+.btn{
+    background-color: #222;
+    color:#fff;
+    padding: 0.7em 1.2em;
+    text-decoration: none;
+    transition: 0.5s;
+    cursor:pointer;
+    border-radius: 5px;
+    border:none;
+    
+
+}
+.btnLoginHeader{
+    
+    position: relative;
+    background-color: rgb(47, 141, 10);
+    color: rgb(255, 255, 255);
+    height: 27px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    
+    
+    
+    
+    
+    
+}
+.btnLoginHeader:hover{
+    font-weight: 800;
+    color:rgb(0, 0, 0)
+}
+.btn:hover{
+    color:rgb(64, 230, 64) ;
+}
+.btnCadCliente{
+    width: 50%;
+    margin: auto;
+    background-color:#23CF5C;
+    color: #222;
+    font-weight: 500;
+    transition: 0.5s
+}
+.btnCadCliente:hover {
+    color: black;
+    font-weight: bold;
+} 

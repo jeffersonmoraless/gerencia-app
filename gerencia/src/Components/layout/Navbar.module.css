@@ -1,0 +1,43 @@
+
+.navbar{
+    position : relative;
+    display: flex;
+    justify-content: space-between;
+    
+   
+}
+.list{
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+}
+ 
+.item{
+    margin-right:3em;
+    
+    
+}
+.item a{
+    color: #fff;
+    text-decoration: none ;
+}
+.item a:hover{
+    color: rgb(155, 243, 155);
+    cursor: pointer;
+}
+.boxLogin{
+    display: flex;
+    width:30%;
+    width: 800px;
+    align-items: center;
+}
+
+    
+    
+    
+    
+   
+    
+   
+
+
