@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
-const { default: Select } = require('../gerencia/src/Components/form/Select');
+
 
 const db = mysql.createPool({
     host: 'localhost',
