@@ -1,15 +1,20 @@
+require('dotenv').config()
+
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+
 
 //conexão com baco de dados
 
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'j_morales',
-    password: 'ana170607',
-    database: 'gerencia',
+    host: `${process.env.host}`,
+    user: `${process.env.user}`,
+    password: `${process.env.password}`,
+    database: `${process.env.banco}`,
 });
 
 app.use(express.json());
@@ -109,17 +114,18 @@ app.post('/cadastrar/dividas', (req, res) => {
 
 //rota para realizar cadastro na tabela de clientes
 
-app.post('/CadastroClientes', (req, res) => {
-    let sql, resposta, { nome, email, password } = req.body
+app.post('/CadastroClientes',async (req, res) => {
+    let sql, { nome, email, password } = req.body
 
     if (!nome) {
-        console.log('entrou')
+
         nome = null
-        res.status(422).send('O campo nome é de prenchimento obrigatorio')
+        return res.status(422).send('O campo nome é de prenchimento obrigatorio')
 
     } if (!email) {
         email = null
-        res.status(422).send('O campo email é de prenchimento obrigatorio')
+
+        return res.status(422).send('O campo email é de prenchimento obrigatorio')
 
     } else { //verifica se email informado ja consta na base de dados
 
@@ -127,40 +133,35 @@ app.post('/CadastroClientes', (req, res) => {
 
         db.query(sql, email, async (err, result) => {
             if (err) {
-                console.log(err);
-            } else if (result.length >= 1) {
-                if (result[0].email === email) {
 
-                    res.status(500).send('O email informado ja possui cadastro')
+                return console.log(err);
+
+            } else if (result.length >= 1) {
+
+                if (result[0].email === email) {
+                    
+                    return res.status(500).send('O email informado ja possui cadastro')
 
                 }
             }
         })
-    }
+    }if(password = req.body)
 
+    sql = "insert into clientes values (?,?,?,?)"
 
+    db.query(sql, [null, nome, email, password], (err, result) => {
+        if (err) {
 
+            console.log(err)
+            res.status(500).send('Aconteceu um erro no servidor, tente novamente mais tarde!')
 
-sql = "insert into clientes values (?,?,?,?)"
- 
-db.query(sql,[null,nome,email,password],(err,result)=>{
-    if(err){
-        
-        console.log(err)
-        res.status(500).send('Aconteceu um erro no servidor, tente novamente mais tarde!')
+        } else {
 
-    }else {
-        
-        console.log('cadastrado com sucesso')
-        res.status(200).send('Usuario cadastrado com sucesso')
+            console.log('cadastrado com sucesso')
+            res.status(200).send('Usuario cadastrado com sucesso')
 
-    }
-})
- 
-
- 
- 
- 
+        }
+    })
 })
 
 
