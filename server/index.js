@@ -3,6 +3,7 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 
+//conexão com baco de dados
 
 const db = mysql.createPool({
     host: 'localhost',
@@ -13,6 +14,8 @@ const db = mysql.createPool({
 
 app.use(express.json());
 app.use(cors());
+
+//rota para consultar tabela categorias
 
 app.get('/categoria', (req, res) => {
     let sql = 'select * from categorias'
@@ -26,6 +29,7 @@ app.get('/categoria', (req, res) => {
     })
 });
 
+//rota para consultar tabela tipo
 
 app.get('/tipo', (req, res) => {
     let sql = 'select * from tipo'
@@ -39,6 +43,7 @@ app.get('/tipo', (req, res) => {
     })
 });
 
+//rota para consultar tabela dividas
 
 app.get('/dividas', (req, res) => {
     let sql = "select descricao , valor, date_format(data,'%d/%m/%Y') data from dividas"
@@ -51,6 +56,9 @@ app.get('/dividas', (req, res) => {
         }
     })
 })
+
+//rota para consultar a soma dos valores do campo valor da tabela dividas
+
 app.get('/dividas/total', (req, res) => {
     let sql = "select sum(valor) valor from dividas"
 
@@ -62,6 +70,8 @@ app.get('/dividas/total', (req, res) => {
         }
     })
 });
+
+//rota para realizar cadastro na tabela de despesas  
 
 app.post('/cadastrar/despesas', (req, res) => {
 
@@ -80,6 +90,8 @@ app.post('/cadastrar/despesas', (req, res) => {
     })
 });
 
+//rota para realizar cadastro na tabela de dividas
+
 app.post('/cadastrar/dividas', (req, res) => {
 
     const { descricao, valor, data, data_vencimento, categoria, qtd_parcelas } = req.body
@@ -95,6 +107,8 @@ app.post('/cadastrar/dividas', (req, res) => {
     })
 })
 
+//rota para realizar cadastro na tabela de clientes
+
 app.post('/CadastroClientes', (req, res) => {
     let sql, resposta, { nome, email, password } = req.body
 
@@ -107,7 +121,7 @@ app.post('/CadastroClientes', (req, res) => {
         email = null
         res.status(422).send('O campo email é de prenchimento obrigatorio')
 
-    } else {
+    } else { //verifica se email informado ja consta na base de dados
 
         sql = 'select email from clientes where email = ?'
 
@@ -133,16 +147,16 @@ db.query(sql,[null,nome,email,password],(err,result)=>{
     if(err){
         
         console.log(err)
+        res.status(500).send('Aconteceu um erro no servidor, tente novamente mais tarde!')
 
     }else {
         
         console.log('cadastrado com sucesso')
+        res.status(200).send('Usuario cadastrado com sucesso')
 
     }
 })
  
-//res.status(200).send('Usuario cadastrado com sucesso')
-// res.status(500).send('Aconteceu um erro no servidor, tente novamente mais tarde!')
 
  
  
