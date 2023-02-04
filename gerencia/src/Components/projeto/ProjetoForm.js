@@ -6,17 +6,17 @@ import SubmitButton from "../form/SubmitButton"
 
 function ProjetoForm({btntext,cadastrar,dividas,setDividas, menu, setMenu}){
 
+    const [formato_pgt,setFormato_pgt] = useState([])
     const [categoria,setCategoria] = useState([])
-    const [tipo,setTipo] = useState([])
     
     
    
 useEffect(()=>{
-        Axios.get('http://192.168.0.110:3500/tipo').then((response) =>{
-            setTipo(response.data)
-         });
         Axios.get('http://192.168.0.110:3500/categoria').then((response) =>{
             setCategoria(response.data)
+         });
+        Axios.get('http://192.168.0.110:3500/formato_pgt').then((response) =>{
+            setFormato_pgt(response.data)
         });
         
 
@@ -28,29 +28,29 @@ useEffect(()=>{
     
     if(e.target.getAttribute('name') === 'descricao'){
 
-        setDividas({'id':dividas.id,'descricao':e.target.value,'valor':dividas.valor,'data':dividas.data,'data_vencimento':dividas.data_vencimento,'categoria':dividas.categoria,'qtd_parcelas':dividas.qtd_parcelas})
+        setDividas({'id':dividas.id,'descricao':e.target.value,'valor':dividas.valor,'data':dividas.data,'data_vencimento':dividas.data_vencimento,'formato_pgt':dividas.formato_pgt,'qtd_parcelas':dividas.qtd_parcelas})
 
     }else if(e.target.getAttribute('name') === 'data') {
            
-        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':dividas.valor,'data':e.target.value,'data_vencimento':dividas.data_vencimento,'categoria':dividas.categoria,'qtd_parcelas':dividas.qtd_parcelas})
+        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':dividas.valor,'data':e.target.value,'data_vencimento':dividas.data_vencimento,'formato_pgt':dividas.formato_pgt,'qtd_parcelas':dividas.qtd_parcelas})
 
     }else if(e.target.getAttribute('name') === 'data_vencimento') {
 
-        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':dividas.valor,'data':dividas.data,'data_vencimento':e.target.value,'categoria':dividas.categoria,'qtd_parcelas':dividas.qtd_parcelas})
+        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':dividas.valor,'data':dividas.data,'data_vencimento':e.target.value,'formato_pgt':dividas.formato_pgt,'qtd_parcelas':dividas.qtd_parcelas})
 
     }else if(e.target.getAttribute('name') === 'valor') {
 
-        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':e.target.value,'data':dividas.data,'data_vencimento':dividas.data_vencimento,'categoria':dividas.categoria,'qtd_parcelas':dividas.qtd_parcelas})
+        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':e.target.value,'data':dividas.data,'data_vencimento':dividas.data_vencimento,'formato_pgt':dividas.formato_pgt,'qtd_parcelas':dividas.qtd_parcelas})
 
-    }else if(e.target.getAttribute('name') === 'categoria') {
+    }else if(e.target.getAttribute('name') === 'formato_pgt') {
 
-        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':dividas.valor,'data':dividas.data,'data_vencimento':dividas.data_vencimento,'categoria':e.target.value,'qtd_parcelas':dividas.qtd_parcelas})
+        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':dividas.valor,'data':dividas.data,'data_vencimento':dividas.data_vencimento,'formato_pgt':e.target.value,'qtd_parcelas':dividas.qtd_parcelas})
         
-    }else if(e.target.getAttribute('name') === 'tipo') {
+    }else if(e.target.getAttribute('name') === 'categoria') {
         setMenu(e.target.value)
 
     }else if(e.target.getAttribute('name') === 'qtd_parcelas') {
-        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':dividas.valor,'data':dividas.data,'data_vencimento':dividas.data_vencimento,'categoria':dividas.categoria,'qtd_parcelas':e.target.value})
+        setDividas({'id':dividas.id,'descricao':dividas.descricao,'valor':dividas.valor,'data':dividas.data,'data_vencimento':dividas.data_vencimento,'formato_pgt':dividas.formato_pgt,'qtd_parcelas':e.target.value})
 
     }
   } 
@@ -58,7 +58,7 @@ useEffect(()=>{
     
     return(
         <form>
-            <Select name='tipo' text='selecione uma opção' tipo={tipo} handleOnChange={handlFormChange}/>
+            <Select name='categoria' text='selecione uma opção' categoria={categoria} handleOnChange={handlFormChange}/>
             {menu === `1` && 
 
                 <>
@@ -80,9 +80,9 @@ useEffect(()=>{
 
                     <Inputs type='date' name='data_vencimento' text='Vencimento:' placeholder='Date' handleOnChange={handlFormChange}/>
 
-                    <Select name='categoria' text='Avista / Parcelado' options={categoria} handleOnChange={handlFormChange}/>
+                    <Select name='formato_pgt' text='Avista / Parcelado' options={formato_pgt} handleOnChange={handlFormChange}/>
                         
-                    {dividas.categoria === '2' &&
+                    {dividas.formato_pgt === '2' &&
                         <Inputs type='number' name='qtd_parcelas' text='quantidade de parcelas:' placeholder='3' handleOnChange={handlFormChange}/>
                     }
 
@@ -98,9 +98,9 @@ useEffect(()=>{
 
                     <Inputs type='date' name='data' text='Data:'handleOnChange={handlFormChange}/>
 
-                    <Select name='categoria' text='Avista / Parcelado' options={categoria} handleOnChange={handlFormChange}/>
+                    <Select name='formato_pgt' text='Avista / Parcelado' options={formato_pgt} handleOnChange={handlFormChange}/>
 
-                    {dividas.categoria === '2' &&
+                    {dividas.formato_pgt === '2' &&
                         <Inputs type='number' name='qtd_parcelas' text='quantidade de parcelas:' placeholder='3' handleOnChange={handlFormChange}/>
                     }
 

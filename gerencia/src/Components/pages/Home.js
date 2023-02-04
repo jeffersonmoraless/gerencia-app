@@ -4,19 +4,28 @@ import sifra2 from '../../img/sifra2.png'
 import LinkButton from '../layout/LinkButton'
 import Nova_conta from './Nova_conta'
 
-function Home(){
+function Home({user}){
     return(
     
         <section className={styles.home_container}>
-            <h1>Bem-Vindo ao <span>Gerencia</span></h1>
-            <p>Começe a gerenciar agora mesmo!</p>
+              
+                <h1>Bem-Vindo ao <span>Gerencia</span></h1>
+            
+            
+
+            
+                <p>Começe a gerenciar agora mesmo!</p>
+           
+            
+            
             
             <LinkButton to='/cadastroCliente' text='cadastre-se'/>
             
-            <div className={styles.conteudo}>
+             <div className={styles.conteudo}>
                 <img src={sifra1} alt="gerencia" className={styles.gira} />
                 <img src={sifra2} alt="gerencia" className={styles.fixa}/>
             </div>
+            
         </section>
 
     )

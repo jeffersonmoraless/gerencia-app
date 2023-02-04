@@ -48,7 +48,13 @@
     font-weight: 500;
     transition: 0.5s
 }
-.btnCadCliente:hover {
+.btnCadCliente:hover ,.closeAlert:hover {
     color: black;
     font-weight: bold;
 } 
+.closeAlert{
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.178);
+    width: 30%;
+    color: black;
+}

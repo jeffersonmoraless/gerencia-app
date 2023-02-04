@@ -9,8 +9,8 @@ import Inputs from '../form/Inputs'
 import SubmitButton from '../form/SubmitButton'
 import { useState } from 'react'
 
-function Navbar(){
-    const [logon,setLogon] = useState(false)
+function Navbar({user}){
+    
 
     const logando = () =>{
         
@@ -25,7 +25,7 @@ function Navbar(){
                         <Link to='/'><img src={sifrao3} alt='sifrao'/></Link>
                     
                     
-                    { logon === true &&
+                    { user === true &&
                         <ul className={styles.list} >
                             
                                 <li className={styles.item}>
@@ -40,12 +40,14 @@ function Navbar(){
                                 <li className={styles.item}>
                                     <Link to='/Sobre'>Sobre</Link>
                                 </li>
-                                {/*<li className={styles.item}>Link to='/nova_conta'>nova_conta</Link></li>*/}
+                                <li className={styles.item}>
+                                    <Link to='/nova_conta'>nova_conta</Link>
+                                </li>
                         
                         </ul>
                     }
             </Container>
-                    {logon === false && 
+                    {user === false && 
                         <form className={styles.boxLogin}>
                             <Inputs type={'text'} name={'email'} placeholder={'e-mail'} text={'e-mail'} estilo={'boxLogin'} render={'cadastre-se'}/>
                             <Inputs type={'password'} name={'senha'} placeholder={'senha'} text={'senha'} estilo={'boxLogin'} render={'esqueceu sua senha'}/>

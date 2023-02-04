@@ -1,5 +1,5 @@
 import styles from './Select.module.css'
-function Select({text, name,options,tipo ,handleOnChange, value}){
+function Select({text, name,options,categoria ,handleOnChange, value}){
     
   
     return(
@@ -11,13 +11,13 @@ function Select({text, name,options,tipo ,handleOnChange, value}){
 
                 <option>Selecione Uma Opção</option> 
                         {typeof options !== 'undefined' && 
-                            options.map((categoria) =>{
-                                return<option value={categoria.id} key={categoria.id}>{categoria.name}</option>
+                            options.map((formato_pgt) =>{
+                                return<option value={formato_pgt.id} key={formato_pgt.id}>{formato_pgt.name}</option>
                             })
                         }
-                        {typeof tipo !== 'undefined' && 
-                            tipo.map((tip) =>{
-                                return<option value={tip.id_tipo} key={tip.id_tipo}>{tip.tipo}</option>
+                        {typeof categoria !== 'undefined' && 
+                            categoria.map((tip) =>{
+                                return<option value={tip.id_categoria} key={tip.id_categoria}>{tip.categoria}</option>
                             })
                         }
                 
