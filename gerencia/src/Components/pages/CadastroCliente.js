@@ -2,16 +2,28 @@
 import Inputs from '../form/Inputs'
 import SubmitButton from '../form/SubmitButton'
 import btn_cancela from '../../img/btn_cancela.png'
-import alerta from '../../img/alerta.png'
-import { Link, useNavigate } from 'react-router-dom'
+
+import { Await, Link } from 'react-router-dom'
 import { useState } from 'react'
 import Axios from 'axios'
 
 import styles from './CadastroCliente.module.css'
-function CadastroCliente({ ip }) {
-    const [clientes, setClientes] = useState({ 'nome': '', 'email': '', 'password': '', 'passwordConfirm': '' })
-    const [alert, setAlert] = useState({ 'state': 422, 'msg': '' })
+import AlertContainer from '../layout/AlertContainer'
+import React from 'react'
+import { AuthContext } from '../../providers/Auth'
+import { useNavigate } from 'react-router-dom'
+
+
+function CadastroCliente() {
+    const navigate = useNavigate()
+    
+    const { clientes, setClientes,ip} = React.useContext(AuthContext)
+
+    
+    const [alert, setAlert] = useState({ 'state': 'false', 'msg': '', 'estilo': 'aprovado' })
+    const [loading, setLoading] = useState({ 'state': false })
     const capturandoDados = (e) => {
+
         if (e.target.getAttribute('name') === 'nome') {
 
             setClientes({ 'nome': e.target.value, 'email': clientes.email, 'password': clientes.password, 'passwordConfirm': clientes.passwordConfirm })
@@ -32,10 +44,16 @@ function CadastroCliente({ ip }) {
 
     }
 
-    const cadastrandoCliente = (e) => {
+
+    const cadastrandoCliente = async (e) => {
         e.preventDefault();
 
-        Axios.post(ip + '/CadastroClientes', {
+        setLoading({ 'state': true })
+
+
+
+
+        await Axios.post(ip + '/CadastroClientes', {
 
             cliente: clientes.nome,
             email: clientes.email,
@@ -43,47 +61,50 @@ function CadastroCliente({ ip }) {
             senhaConfirma: clientes.passwordConfirm
 
         })
-            .then((response) => {
-
-                //window.alert(response.data)
+            .then(async(response) => {
+                
+                setAlert({ 'state': response.status, 'msg': response.data.msg, 'estilo': 'aprovado' })
+                
 
             })
             .catch((err) => {
-                setAlert({ 'state': err.response.status, 'msg': err.response.data })
+                setAlert({ 'state': err.response.status, 'msg': err.response.data, estilo: 'error' })
+
             })
+        setLoading({ 'state': false })
+
+
+
     }
-    const closeAlert = () => {
-        setAlert({ 'state': false, 'msg': '' })
-    }
+
+
+
 
     return (
         <>
+        
             <form className={`${styles.CadRecPasswordCliente}`}>
-
+           
                 <Link to={'/'}><img src={btn_cancela} alt='btn_cancela' /></Link>
 
-                <Inputs type={'text'} name={'nome'} placeholder={'Nome'} text={'Nome'} handleOnChange={capturandoDados} estilo={'inputCadRecPasswordCliente'} />
-                <Inputs type={'email'} name={'email'} placeholder={'e-mail'} text={'e-mail'} handleOnChange={capturandoDados} estilo={'inputCadRecPasswordCliente'} />
-                <Inputs type={'password'} name={'password'} placeholder={'Senha'} text={'Senha'} handleOnChange={capturandoDados} estilo={'inputCadRecPasswordCliente'} />
+                <Inputs type={'text'} name={'nome'} placeholder={'Nome'} text={'Nome'} value={clientes.nome} handleOnChange={capturandoDados} estilo={'inputCadRecPasswordCliente'} />
+                <Inputs type={'email'} name={'email'} placeholder={'e-mail'} text={'e-mail'} value={clientes.email} handleOnChange={capturandoDados} estilo={'inputCadRecPasswordCliente'} />
+                <Inputs type={'password'} name={'password'} placeholder={'Senha'} text={'Senha'} value={clientes.password} handleOnChange={capturandoDados} estilo={'inputCadRecPasswordCliente'} />
+                <Inputs type={'password'} name={'passwordConfirm'} placeholder={'Confirme A Senha'} text={'Confirme a Senha'} value={clientes.passwordConfirm} handleOnChange={capturandoDados} estilo={'inputCadRecPasswordCliente'} />
 
 
 
-                <Inputs type={'password'} name={'passwordConfirm'} placeholder={'Confirme A Senha'} text={'Confirme a Senha'} handleOnChange={capturandoDados} estilo={'inputCadRecPasswordCliente'} />
 
-                {alert.state == '422' && 
-                <div className={styles.alert}>
-                    <div className={styles.container_msg}>
-                        <img src={alerta} alt='alerta' />
-                        <p>{alert.msg}</p>
-                    </div>
-                    <div className={styles.closeAlert}>
-                        <SubmitButton type={'button'} text={'OK'} func={closeAlert} estilo={'closeAlert'} />
-                    </div>
 
-                </div>}
 
-                <SubmitButton type={'submit'} text={'Cadastrar'} func={cadastrandoCliente} estilo={'btnCadCliente'} />
+
+
+
+
+                <SubmitButton type={'submit'} text={'Cadastrar'} func={cadastrandoCliente} disabled={loading.state} estilo={'btnCadCliente'} />
+
             </form>
+            <AlertContainer setClientes={setClientes} clientes={clientes} setAlert={setAlert} alert={alert} />
         </>
 
     )

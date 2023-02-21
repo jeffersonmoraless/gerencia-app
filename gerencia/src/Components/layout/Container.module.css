@@ -1,11 +1,16 @@
 .container{
+
     box-sizing: border-box;
-    width: 100%;
     display: flex;
     justify-content: space-between;
-    margin: 0 auto;
+    margin: 0 auto ;
+    padding: 10px 10px 0px 10px ;
     position: relative;
     flex-wrap: wrap;
+    
+    width: 100%;
+    
+    
 }
 .min_height{
     min-height: 76.1vh;
@@ -18,7 +23,7 @@
     justify-content: flex-start;
 
 }
-img{
+.img{
     
     width: 100%;
     

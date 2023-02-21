@@ -1,0 +1,24 @@
+.setLogout{
+    /*
+    background-image: linear-gradient(to bottom, #222222 40%,#ff0000);
+   */
+    background-image: linear-gradient(to bottom, #222222 50%,#37d53a);
+    justify-content: space-between;
+    padding: 0 58px 0px 10px;
+    height: 50px;
+    overflow: hidden;
+    
+   
+
+
+}   
+
+.setLogout >p{
+    
+    display:inline;
+    line-height: 50px;
+    
+    color:white;
+    font-weight: 600;
+    
+}

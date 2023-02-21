@@ -1,11 +1,15 @@
-.boxButton{
+.position_login, .position_cadastrar{
     
     height: 65px; 
     align-items: center;   
     display: flex;
     margin-bottom: 4px;
+    
+    
 
 }
+
+
 .btn{
     background-color: #222;
     color:#fff;
@@ -20,7 +24,8 @@
 }
 .btnLoginHeader{
     
-    position: relative;
+    /*position: relative;
+    */
     background-color: rgb(47, 141, 10);
     color: rgb(255, 255, 255);
     height: 27px;
@@ -46,15 +51,34 @@
     background-color:#23CF5C;
     color: #222;
     font-weight: 500;
-    transition: 0.5s
+    transition: 0.5s;
 }
+
 .btnCadCliente:hover ,.closeAlert:hover {
     color: black;
     font-weight: bold;
 } 
+.btnCadCliente:disabled{
+    cursor: default;
+    background-color: #23cf5c94;
+    color:rgb(128, 123, 123);
+    font-weight:500;
+    
+}
 .closeAlert{
     margin: auto;
     background-color: rgba(0, 0, 0, 0.178);
     width: 30%;
     color: black;
+}
+.position_logout{
+    float: right;
+    
+    line-height: 50px;
+}
+.logout{
+    background-color: red;
+    height: 27px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }

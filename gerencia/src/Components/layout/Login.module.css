@@ -1,0 +1,11 @@
+.boxLogin{
+    display: flex;
+    width:60%;
+    align-items: center;
+    
+    position: absolute;
+    top: 50%;
+    transform: translatey(-50%);
+    right: 58px;
+    
+}

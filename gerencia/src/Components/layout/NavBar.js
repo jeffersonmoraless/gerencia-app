@@ -5,29 +5,60 @@ import Container from './Container'
 import styles from './Navbar.module.css'
 
 import sifrao3 from '../../img/sifrao3.png'
-import Inputs from '../form/Inputs'
-import SubmitButton from '../form/SubmitButton'
-import { useState } from 'react'
 
-function Navbar({user}){
+import Login from './Login'
+import React, { useEffect } from 'react'
+import { AuthContext, AuthProvider } from '../../providers/Auth'
+import { setTokenUser } from '../contexts/Auths'
+import Logout from './Logout'
+import { useNavigate } from 'react-router-dom'
+import Axios from 'axios'
+
+
+
+
+function Navbar() {
+    const navigate = useNavigate()
     
-
-    const logando = () =>{
+    const { ip, clientes, setClientes} = React.useContext(AuthContext)
+    
+    const saindo = () => {
         
+        localStorage.removeItem('user')
+        navigate('/')
     }
-    
-    return(
-        <nav className={styles.navbar}>
+    const logando = (e) => {
+        e.preventDefault()
+
+        Axios.post(ip + '/user/login', {
+
+            email: clientes.email,
+            senha: clientes.password
+
+        }).then(response => {
             
-            <Container>
-                    
-                    
-                        <Link to='/'><img src={sifrao3} alt='sifrao'/></Link>
-                    
-                    
-                    { user === true &&
-                        <ul className={styles.list} >
-                            
+            
+            setTokenUser(response, navigate)
+            setClientes({'clientes.email':'','clientes.password':''})
+
+        }).catch(err => {
+            console.log('erro ', err)
+        })
+    }
+
+    return (
+        <>
+
+            <div className={styles.navbar}>
+               
+                {localStorage.getItem('user') && 
+
+                    <>
+                        <Container>
+                            <Link to='/'><img src={sifrao3} alt='sifrao' /></Link>
+
+                            <ul className={styles.list} >
+
                                 <li className={styles.item}>
                                     <Link to='/'>Home</Link>
                                 </li>
@@ -43,22 +74,37 @@ function Navbar({user}){
                                 <li className={styles.item}>
                                     <Link to='/nova_conta'>nova_conta</Link>
                                 </li>
-                        
-                        </ul>
-                    }
-            </Container>
-                    {user === false && 
-                        <form className={styles.boxLogin}>
-                            <Inputs type={'text'} name={'email'} placeholder={'e-mail'} text={'e-mail'} estilo={'boxLogin'} render={'cadastre-se'}/>
-                            <Inputs type={'password'} name={'senha'} placeholder={'senha'} text={'senha'} estilo={'boxLogin'} render={'esqueceu sua senha'}/>
+
+                                {/*<SubmitButton type={'submit'} func={saindo} text={'Entrar'} estilo={'btnLoginHeader'} position={'position_login'}/>*/}
+                            </ul>
+
+                        </Container>
+                        <AuthProvider>
+
+
+                            <Logout func={saindo} />
+
+
+                        </AuthProvider>
                     
-                            <SubmitButton type={'submit'} func={logando} text={'Entrar'} estilo={'btnLoginHeader'}/>
-                        </form>   
+                    </>
+                }
+                              
+                {localStorage.getItem('user') === null &&
+                    <>
+                        <Link to='/'><img src={sifrao3} alt='sifrao' /></Link>
+                        <Login func={logando}/>
+                    </>
                     }
-                    
                 
-        </nav> 
-    
+                
+
+
+
+            </div>
+
+
+        </>
     )
 }
 

@@ -1,4 +1,6 @@
-const { Sequelize, DataTypes } = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize');
+const Clientes = require('./clientes')
+
 const db = require('./db')
 
 const Dividas = db.define('dividas', {
@@ -24,6 +26,11 @@ const Dividas = db.define('dividas', {
     
     
 },{freezeTableName:true})
+
+Dividas.belongsTo(Clientes,{
+    constraint: true,
+    foreignKey: 'id_cliente'
+})
 
 //Dividas.sync();
 

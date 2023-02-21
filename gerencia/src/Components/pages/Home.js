@@ -4,7 +4,7 @@ import sifra2 from '../../img/sifra2.png'
 import LinkButton from '../layout/LinkButton'
 import Nova_conta from './Nova_conta'
 
-function Home({user}){
+function Home(){
     return(
     
         <section className={styles.home_container}>

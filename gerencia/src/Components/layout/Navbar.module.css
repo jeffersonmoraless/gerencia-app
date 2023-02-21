@@ -1,17 +1,19 @@
-
 .navbar{
-    position : relative;
-    display: flex;
+    background-color:#222222;
+    color: aliceblue;
+    padding-top:10px;
+    position: relative;
     justify-content: space-between;
-    
    
+}
+.logouts{
+   background-color: red; 
 }
 .list{
     display: flex;
     list-style-type: none;
     align-items: center;
 }
- 
 .item{
     margin-right:3em;
     
@@ -25,12 +27,8 @@
     color: rgb(155, 243, 155);
     cursor: pointer;
 }
-.boxLogin{
-    display: flex;
-    width:30%;
-    width: 800px;
-    align-items: center;
-}
+
+/**/
 
     
     

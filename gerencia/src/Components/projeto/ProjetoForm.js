@@ -12,10 +12,11 @@ function ProjetoForm({btntext,cadastrar,dividas,setDividas, menu, setMenu}){
     
    
 useEffect(()=>{
-        Axios.get('http://192.168.0.110:3500/categoria').then((response) =>{
+        Axios.get('http://192.168.0.101:3500/categoria').then((response) =>{
+            
             setCategoria(response.data)
          });
-        Axios.get('http://192.168.0.110:3500/formato_pgt').then((response) =>{
+        Axios.get('http://192.168.0.101:3500/formato_pgt').then((response) =>{
             setFormato_pgt(response.data)
         });
         
@@ -112,7 +113,7 @@ useEffect(()=>{
             }
             
            {menu >= 1 && menu <=3  &&
-            <SubmitButton text={btntext} type='submit' func={cadastrar} />
+            <SubmitButton text={btntext} type='submit' func={cadastrar} position={'position_cadastrar'} />
            
            }
             

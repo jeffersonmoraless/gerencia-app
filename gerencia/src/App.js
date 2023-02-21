@@ -1,5 +1,3 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { useState } from 'react'
 import Axios from 'axios'
 import Home from './Components/pages/Home'
 import Contato from './Components/pages/Contato'
@@ -8,20 +6,25 @@ import Navbar from './Components/layout/NavBar'
 import Footer from './Components/layout/Footer'
 import Despesas from './Components/pages/Despesas'
 import Nova_conta from './Components/pages/Nova_conta'
-
-
-
 import Container from './Components/layout/Container'
-
-import styles from './App.module.css'
 import CadastroCliente from './Components/pages/CadastroCliente'
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Private } from './Components/contexts/Auths'
+import { AuthProvider } from './providers/Auth'
+
+
+
+
+
 function App() {
 
   const [despesas, setDespesas] = useState()
-  const [user, setUser] = useState(false )
+
+
   const [dividas, setDividas] = useState({ 'id': '', 'descricao': '', 'valor': '', 'data': '', 'data_vencimento': '', 'categoria:': '', 'qtd_parcelas': '' });
   const [menu, setMenu] = useState()
-  const ip = 'http://192.168.0.110:3500';
+  const ip = 'http://192.168.0.101:3500';
 
   const cadastrar = (e) => {
     e.preventDefault();
@@ -29,16 +32,21 @@ function App() {
 
     switch (menu) {
       case '1':
-        Axios.post(ip + '/cadastrar/despesas', {
 
+        console.log('entrou no cadastro de despesas')
+        Axios.post('http://192.168.0.101:3500/cadastrar/despesas', {
           descricao: dividas.descricao,
-          valor: dividas.valor,
           data: dividas.data,
-        }).then((response) => {
-          console.log(response)
-        }).catch((err) => {
-          console.log(err)
-        })
+          valor: dividas.valor
+        },
+          {
+            headers: { "Authorization": JSON.parse(localStorage.getItem('user')).token }
+          }).then((response) => {
+            console.log(response)
+          }).catch((err) => {
+            console.log(err)
+          })
+
         break;
       case '2':
         Axios.post(ip + '/cadastrar/dividas', {
@@ -62,28 +70,52 @@ function App() {
 
     }
   }
-/*
-  function RotasPrivadas(rota,redirec){
-    console.log('esta aqui',user)
-    return user ? rota : <Navigate to={redirec} />
-  }
-*/
+  /*
+    function RotasPrivadas(rota,redirec){
+      console.log('esta aqui',user)
+      return user ? rota : <Navigate to={redirec} />
+    }
+  */
+
+
   return (
     <Router>
-      <div className={styles.navbarapp}>
 
-        <Navbar user={user}/>
-      </div>
+      <AuthProvider>
+
+        <Navbar />
+
+      </AuthProvider>
+
+
+
+
+
+
+
+
+
+
+
       <Container customClass="min_height" >
 
         <Routes>
 
-          <Route exact path='/' element={<Home user={user} />}>  </Route>
-          <Route exact path='/CadastroCliente' element={<CadastroCliente ip={ip} />}>  </Route>
-          <Route exact path='/Contato' element={<Contato />}>  </Route>
-          <Route exact path='/Sobre' element={<Sobre />}>  </Route>
-          <Route exact path='/Despesas' element={<Despesas despesas={despesas} setDespesas={setDespesas} dividas={dividas} setDividas={setDividas} />}>  </Route>
-          <Route exact path='/Nova_conta' element={<Nova_conta cadastrar={cadastrar} dividas={dividas} setDividas={setDividas} menu={menu} setMenu={setMenu} />}>  </Route>
+          <Route exact path='/' element={<Home />}>  </Route>
+
+          <Route exact path='/CadastroCliente' element={
+            <AuthProvider>
+              <CadastroCliente />
+            </AuthProvider>
+          }>  </Route>
+
+          <Route exact path='/Contato' element={<Private><Contato /></Private>}>  </Route>
+          <Route exact path='/Sobre' element={<Private><Sobre /></Private>}>  </Route>
+          <Route exact path='/Despesas' element={<Private><Despesas despesas={despesas} setDespesas={setDespesas} dividas={dividas} setDividas={setDividas} /> </Private>}>  </Route>
+          <Route exact path='/Nova_conta' element={<Private><Nova_conta cadastrar={cadastrar} dividas={dividas} setDividas={setDividas} menu={menu} setMenu={setMenu} /></Private>}>  </Route>
+
+
+
 
         </Routes>
 
@@ -98,7 +130,8 @@ export default App;
 
 
 
-
+/*<Route exact path='/CadastroCliente' element={<CadastroCliente ip={ip} clientes={clientes} setClientes = {setClientes} />}>  </Route>
+        */
 
 
 

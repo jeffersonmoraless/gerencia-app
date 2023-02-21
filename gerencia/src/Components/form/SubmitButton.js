@@ -1,8 +1,8 @@
 import styles from './SubmitButton.module.css'
-function SubmitButton({text,type,func,estilo}){
+function SubmitButton({text,type,func,estilo,disabled,position}){
     return(
-        <div className={styles.boxButton}>
-            <button className = {`${styles.btn} ${styles[estilo]}`} type={type} onClick={func}>{text}</button>
+        <div className={`${styles.boxButton} ${styles[position]}`}>
+            <button className = {`${styles.btn} ${styles[estilo]}`} type={type} disabled={disabled} onClick={func}>{text} </button>
         </div>
 
     )
